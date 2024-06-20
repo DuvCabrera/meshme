@@ -133,66 +133,87 @@ class HomePage extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Obx(
-                        () => ListView.builder(
-                          itemCount: Get.find<HomeControler>().eventList.length,
-                          itemBuilder: (context, index) {
-                            var itens = Get.find<HomeControler>().eventList;
-                            return Container(
-                              clipBehavior: Clip.hardEdge,
-                              margin: const EdgeInsets.only(bottom: 16),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                    color: LightColors().homeCardBorderColor),
-                              ),
-                              child: GestureDetector(
-                                onTap: () => Get.offAllNamed(AppRoutes.EVENT,
-                                    arguments: [itens[index]]),
-                                child: Row(
-                                  children: <Widget>[
-                                    Image.asset(
-                                      'assets/images/futbol.png',
-                                      width: 100,
-                                      height: 100,
-                                      fit: BoxFit.cover,
+                        () => Get.find<HomeControler>().isLoading
+                            ? Column(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      color: LightColors().backGroundPageColor,
+                                      child: Center(
+                                        child: CircularProgressIndicator(
+                                          color: LightColors()
+                                              .splashCircularProgressIndicatorColor,
+                                        ),
+                                      ),
                                     ),
-                                    const SizedBox(width: 16),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                  ),
+                                ],
+                              )
+                            : ListView.builder(
+                                itemCount:
+                                    Get.find<HomeControler>().eventList.length,
+                                itemBuilder: (context, index) {
+                                  var itens =
+                                      Get.find<HomeControler>().eventList;
+                                  return Container(
+                                    clipBehavior: Clip.hardEdge,
+                                    margin: const EdgeInsets.only(bottom: 16),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                          color: LightColors()
+                                              .homeCardBorderColor),
+                                    ),
+                                    child: GestureDetector(
+                                      onTap: () => Get.offAllNamed(
+                                          AppRoutes.EVENT,
+                                          arguments: [itens[index]]),
+                                      child: Row(
                                         children: <Widget>[
-                                          Text(
-                                            itens[index].title,
-                                            style: LightTextstyle()
-                                                .homeCardTitleText,
+                                          Image.asset(
+                                            'assets/images/futbol.png',
+                                            width: 100,
+                                            height: 100,
+                                            fit: BoxFit.cover,
                                           ),
-                                          Text(
-                                            itens[index].category,
-                                            style: LightTextstyle()
-                                                .homeCardSubTitleText,
+                                          const SizedBox(width: 16),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                Text(
+                                                  itens[index].title,
+                                                  style: LightTextstyle()
+                                                      .homeCardTitleText,
+                                                ),
+                                                Text(
+                                                  itens[index].category,
+                                                  style: LightTextstyle()
+                                                      .homeCardSubTitleText,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          GestureDetector(
+                                            onTap: () =>
+                                                _showConfirmationBottomSheet(
+                                                    context, itens[index].id!),
+                                            child: SizedBox(
+                                              width: 45,
+                                              height: 45,
+                                              child: Image.asset(
+                                                'assets/images/delete_icon.png',
+                                              ),
+                                            ),
                                           ),
                                         ],
                                       ),
                                     ),
-                                    GestureDetector(
-                                      onTap: () => _showConfirmationBottomSheet(
-                                          context, itens[index].id!),
-                                      child: SizedBox(
-                                        width: 45,
-                                        height: 45,
-                                        child: Image.asset(
-                                          'assets/images/delete_icon.png',
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                  );
+                                },
                               ),
-                            );
-                          },
-                        ),
                       ),
                     ),
                   ),
