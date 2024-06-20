@@ -17,4 +17,5 @@ abstract class AppColors {
   Color get homeModalButtonColor;
   Color get backGroundPageColor;
   Color get eventConfirmButtonColor;
+  Color get splashCircularProgressIndicatorColor;
 }

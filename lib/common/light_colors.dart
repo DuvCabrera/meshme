@@ -49,6 +49,9 @@ class LightColors extends AppColors {
 
   @override
   Color get eventConfirmButtonColor => _lightGreen;
+
+  @override
+  Color get splashCircularProgressIndicatorColor => _accentRed;
 }
 
 const _white = Colors.white;

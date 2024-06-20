@@ -43,6 +43,12 @@ class LightTextstyle extends AppTextstyle {
 
   @override
   TextStyle get eventAppBarTitleText => _titleMedium;
+
+  @override
+  TextStyle get loginErrorSnackbarMessageText => _titleLarge;
+
+  @override
+  TextStyle get loginErrorSnackbarTitleText => _subtitleMedium;
 }
 
 const String _fontFamily = 'Montserrat';

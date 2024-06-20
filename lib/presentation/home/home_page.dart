@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:teste_mesh/common/controller/auth_controller.dart';
 import 'package:teste_mesh/common/light_colors.dart';
 import 'package:teste_mesh/common/light_textstyle.dart';
 import 'package:teste_mesh/presentation/common/app_button.dart';
@@ -84,6 +86,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var auth = Get.find<AuthController>();
     return ColoredSafeArea(
       child: LayoutBuilder(builder: (context, constraints) {
         return Scaffold(
@@ -184,7 +187,7 @@ class HomePage extends StatelessWidget {
                     constraints: constraints,
                     text: 'Adicionar',
                     color: LightColors().homePageAddButtonColor,
-                    onPressed: () {},
+                    onPressed: auth.logOut,
                   ),
                 ),
                 const SizedBox(

@@ -15,4 +15,6 @@ abstract class AppTextstyle {
   TextStyle get homeModalSubTitleText;
   TextStyle get homeModalButtonText;
   TextStyle get eventAppBarTitleText;
+  TextStyle get loginErrorSnackbarTitleText;
+  TextStyle get loginErrorSnackbarMessageText;
 }

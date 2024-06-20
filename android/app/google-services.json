@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "29961590436",
+    "project_id": "mesh-project-b4e86",
+    "storage_bucket": "mesh-project-b4e86.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:29961590436:android:b2008d0250a13a664b3831",
+        "android_client_info": {
+          "package_name": "com.example.teste_mesh"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "29961590436-7l8ho35s5e44o4fhe9drkop9l3rljjt1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.teste_mesh",
+            "certificate_hash": "931ecb9a29b591216d2ae5c869e29bfb165cbcfc"
+          }
+        },
+        {
+          "client_id": "29961590436-pjs8kcvfflbhfq93i2koui5inh01ikut.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeo82IIqYVarvCvWu05BIB4MfdfG6Eayo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "29961590436-pjs8kcvfflbhfq93i2koui5inh01ikut.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
