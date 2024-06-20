@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:teste_mesh/common/bindings/auth_binding.dart';
+import 'package:teste_mesh/common/bindings/application_binding.dart';
 import 'package:teste_mesh/common/route/app_page_routes.dart';
 import 'package:teste_mesh/common/route/app_routes.dart';
 
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       ),
       getPages: Pages.routes,
       initialRoute: AppRoutes.SPLASH,
-      initialBinding: AuthBinding(),
+      initialBinding: ApplicationBinding(),
     );
   }
 }

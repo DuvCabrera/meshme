@@ -85,6 +85,7 @@ class LoginPage extends StatelessWidget {
                       height: 12,
                     ),
                     Obx(() => APPTextField(
+                          keyboardType: TextInputType.number,
                           controller: _senhaController,
                           onChanged: Get.find<LoginController>().setPassword,
                           errorText:

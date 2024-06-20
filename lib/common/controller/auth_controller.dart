@@ -4,17 +4,17 @@ import 'package:teste_mesh/common/route/app_routes.dart';
 
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
-  late Rx<User?> _user;
+  late Rx<User?> user;
   FirebaseAuth auth = FirebaseAuth.instance;
   final GoogleAuthProvider _provider = GoogleAuthProvider();
 
   @override
   void onReady() {
     super.onReady();
-    _user = Rx<User?>(auth.currentUser);
+    user = Rx<User?>(auth.currentUser);
     // abre uma stream para verificar o que esta acontecendo com o usuario
-    _user.bindStream(auth.userChanges());
-    ever(_user, _initialScreen);
+    user.bindStream(auth.userChanges());
+    ever(user, _initialScreen);
   }
 
   _initialScreen(User? user) {

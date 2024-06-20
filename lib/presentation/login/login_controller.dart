@@ -13,10 +13,10 @@ class LoginController extends GetxController {
   @override
   void onReady() async {
     super.onReady();
-    interval(_userEmail, _validateEmail,
-        time: const Duration(milliseconds: 500));
-    interval(_userPassword, _validatePassword,
-        time: const Duration(milliseconds: 500));
+    debounce(_userEmail, _validateEmail,
+        time: const Duration(milliseconds: 800));
+    ever(_userPassword, _validatePassword);
+    // time: const Duration(milliseconds: 800));
   }
 
   final _userEmail = ''.obs;
@@ -44,14 +44,14 @@ class LoginController extends GetxController {
   }
 
   void _validatePassword(String password) => _isPasswordInvalid.value =
-      (password.isEmpty || (password.length <= 6)) ? true : false;
+      (password.isEmpty || (password.length < 6)) ? true : false;
 
   void setEmail(String email) {
-    _userEmail.value = email;
+    _userEmail.value = email.toLowerCase().trim();
   }
 
   void setPassword(String password) {
-    _userPassword.value = password;
+    _userPassword.value = password.trim();
   }
 
   void setUserError() {

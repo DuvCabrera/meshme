@@ -3,13 +3,15 @@ import 'package:get/get.dart';
 import 'package:teste_mesh/common/controller/auth_controller.dart';
 import 'package:teste_mesh/common/light_colors.dart';
 import 'package:teste_mesh/common/light_textstyle.dart';
+import 'package:teste_mesh/common/route/app_routes.dart';
 import 'package:teste_mesh/presentation/common/app_button.dart';
 import 'package:teste_mesh/presentation/common/colored_safe_area.dart';
+import 'package:teste_mesh/presentation/home/home_controler.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  void _showConfirmationBottomSheet(BuildContext context) {
+  void _showConfirmationBottomSheet(BuildContext context, int id) {
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
@@ -70,6 +72,7 @@ class HomePage extends StatelessWidget {
                   constraints: constraints,
                   color: LightColors().homeModalButtonColor,
                   onPressed: () {
+                    Get.find<HomeControler>().removeEvent(id);
                     Navigator.of(context).pop();
                   },
                 ),
@@ -86,118 +89,132 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var auth = Get.find<AuthController>();
     return ColoredSafeArea(
-      child: LayoutBuilder(builder: (context, constraints) {
-        return Scaffold(
-          body: Container(
-            color: LightColors().safeAreaColor,
-            width: constraints.maxWidth,
-            height: constraints.maxHeight,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  child: Image.asset(
-                    'assets/images/small_mesh_logo.png',
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return Scaffold(
+            body: Container(
+              color: LightColors().safeAreaColor,
+              width: constraints.maxWidth,
+              height: constraints.maxHeight,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
                     height: 20,
                   ),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Divider(
-                  color: LightColors().homeDividerColor,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(
-                    'Minha agenda',
-                    style: LightTextstyle().homeTitleText,
+                  Container(
+                    alignment: Alignment.center,
+                    child: GestureDetector(
+                      onTap: Get.find<AuthController>().logOut,
+                      child: Image.asset(
+                        'assets/images/small_mesh_logo.png',
+                        height: 20,
+                      ),
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: ListView.builder(
-                      itemCount: 3,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          clipBehavior: Clip.hardEdge,
-                          margin: const EdgeInsets.only(bottom: 16),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                                color: LightColors().homeCardBorderColor),
-                          ),
-                          child: Row(
-                            children: <Widget>[
-                              Image.asset(
-                                'assets/images/futbol.png',
-                                width: 100,
-                                height: 100,
-                                fit: BoxFit.cover,
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Divider(
+                    color: LightColors().homeDividerColor,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Text(
+                      'Minha agenda',
+                      style: LightTextstyle().homeTitleText,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Obx(
+                        () => ListView.builder(
+                          itemCount: Get.find<HomeControler>().eventList.length,
+                          itemBuilder: (context, index) {
+                            var itens = Get.find<HomeControler>().eventList;
+                            return Container(
+                              clipBehavior: Clip.hardEdge,
+                              margin: const EdgeInsets.only(bottom: 16),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                    color: LightColors().homeCardBorderColor),
                               ),
-                              const SizedBox(width: 16),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                              child: GestureDetector(
+                                onTap: () => Get.offAllNamed(AppRoutes.EVENT,
+                                    arguments: [itens[index]]),
+                                child: Row(
                                   children: <Widget>[
-                                    Text(
-                                      'Donos da Quadra',
-                                      style: LightTextstyle().homeCardTitleText,
+                                    Image.asset(
+                                      'assets/images/futbol.png',
+                                      width: 100,
+                                      height: 100,
+                                      fit: BoxFit.cover,
                                     ),
-                                    Text(
-                                      'Futebol',
-                                      style:
-                                          LightTextstyle().homeCardSubTitleText,
+                                    const SizedBox(width: 16),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text(
+                                            itens[index].title,
+                                            style: LightTextstyle()
+                                                .homeCardTitleText,
+                                          ),
+                                          Text(
+                                            itens[index].category,
+                                            style: LightTextstyle()
+                                                .homeCardSubTitleText,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () => _showConfirmationBottomSheet(
+                                          context, itens[index].id!),
+                                      child: SizedBox(
+                                        width: 45,
+                                        height: 45,
+                                        child: Image.asset(
+                                          'assets/images/delete_icon.png',
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 ),
                               ),
-                              GestureDetector(
-                                onTap: () =>
-                                    _showConfirmationBottomSheet(context),
-                                child: SizedBox(
-                                  width: 45,
-                                  height: 45,
-                                  child: Image.asset(
-                                    'assets/images/delete_icon.png',
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
+                            );
+                          },
+                        ),
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: AppButton(
-                    constraints: constraints,
-                    text: 'Adicionar',
-                    color: LightColors().homePageAddButtonColor,
-                    onPressed: auth.logOut,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: AppButton(
+                      constraints: constraints,
+                      text: 'Adicionar',
+                      color: LightColors().homePageAddButtonColor,
+                      onPressed: () =>
+                          Get.offAllNamed(AppRoutes.EVENT, arguments: [null]),
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: 24,
-                )
-              ],
+                  const SizedBox(
+                    height: 48,
+                  )
+                ],
+              ),
             ),
-          ),
-        );
-      }),
+          );
+        },
+      ),
     );
   }
 }
